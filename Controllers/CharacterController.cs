@@ -31,5 +31,14 @@ namespace web_api.Controllers
             
             return Ok(characters.FirstOrDefault(c => c.Id == id));
         }
+
+        // After creation we return all the characters. 
+        // I guess I could also do a void method. 
+        [HttpPost]
+        public ActionResult<List<Character>> AddCharacter(Character newCharacter) {
+
+            characters.Add(newCharacter);
+            return Ok(characters);
+        }
     }
 }
