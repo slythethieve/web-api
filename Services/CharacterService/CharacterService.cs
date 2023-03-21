@@ -14,18 +14,18 @@ namespace web_api.Services.CharacterService
             new Character{ Id = 1, Name = "Douchebag"}
         };
 
-        public List<Character> AddCharacter(Character newCharacter)
+        public async Task<List<Character>> AddCharacter(Character newCharacter)
         {
             characters.Add(newCharacter);
             return characters;
         }
 
-        public List<Character> GetAllCharacters()
+        public async Task<List<Character>> GetAllCharacters()
         {
             return characters;
         }
 
-        public Character GetCharacterById(int id)
+        public async Task<Character> GetCharacterById(int id)
         {
             // To fix possible argument null exception
             var character = characters.FirstOrDefault(c => c.Id == id);
