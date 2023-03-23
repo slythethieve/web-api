@@ -20,20 +20,20 @@ namespace web_api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> GetAll() {
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> GetAll() {
 
             return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("GetSingle/{id}")]
-        public async Task<ActionResult<ServiceResponse<Character>>> GetSingle(int id) {
+        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> GetSingle(int id) {
 
             
             return Ok(await _characterService.GetCharacterById(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> AddCharacter(Character newCharacter) {
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> AddCharacter(AddCharacterDTO newCharacter) {
 
             return Ok(await _characterService.AddCharacter(newCharacter));
         }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace web_api.Models
+namespace web_api.DTOs.Character
 {
-    public class Character
+    public class GetCharacterDTO
     {
         public int Id { get; set; }
 

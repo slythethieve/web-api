@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace web_api.Models
+namespace web_api.DTOs.Character
 {
-    public class Character
+    public class AddCharacterDTO
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = "Sly";
         public int HitPoints { get; set; } = 100;
         public int Attack { get; set; } = 10;
