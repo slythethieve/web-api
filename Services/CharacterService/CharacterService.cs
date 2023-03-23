@@ -23,7 +23,11 @@ namespace web_api.Services.CharacterService
         public async Task<ServiceResponse<List<GetCharacterDTO>>> AddCharacter(AddCharacterDTO newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
-            characters.Add(_mapper.Map<Character>(newCharacter));
+            var character = _mapper.Map<Character>(newCharacter);
+            // This scans through all characters and the returns the value with the biggest id.
+            // With Entity Framework this is not needed. It should be doing it by itself. 
+            character.Id = characters.Max(c => c.Id) + 1;
+            characters.Add(character);
             serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
             return serviceResponse;
         }
@@ -43,5 +47,29 @@ namespace web_api.Services.CharacterService
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<GetCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        {
+            var serviceResponse = new ServiceResponse<GetCharacterDTO>();
+            try {
+                var character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+
+                if(character is null) {
+                    throw new Exception($"Character with Id '{updatedCharacter.Id}' not found");
+                }
+                character.Name = updatedCharacter.Name;
+                character.HitPoints = updatedCharacter.HitPoints;
+                character.Attack = updatedCharacter.Attack;
+                character.Defense = updatedCharacter.Defense;
+                character.Intelligence = updatedCharacter.Intelligence;
+                character.Class = updatedCharacter.Class;
+
+                serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
+            } catch (Exception e) {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+            }
+            
+            return serviceResponse;
+        }
     }
 }

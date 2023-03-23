@@ -11,6 +11,7 @@ namespace web_api
         public AutoMapperProfile()
         {
             CreateMap<Character, GetCharacterDTO>();
+            CreateMap<AddCharacterDTO, Character>();
         }
         
     }
