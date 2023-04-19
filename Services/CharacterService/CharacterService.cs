@@ -56,14 +56,35 @@ namespace web_api.Services.CharacterService
                 if(character is null) {
                     throw new Exception($"Character with Id '{updatedCharacter.Id}' not found");
                 }
-                character.Name = updatedCharacter.Name;
-                character.HitPoints = updatedCharacter.HitPoints;
-                character.Attack = updatedCharacter.Attack;
-                character.Defense = updatedCharacter.Defense;
-                character.Intelligence = updatedCharacter.Intelligence;
-                character.Class = updatedCharacter.Class;
+
+                _mapper.Map(updatedCharacter, character);
+
+                
+
+                
 
                 serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
+            } catch (Exception e) {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+            }
+            
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetCharacterDTO>>> DeleteCharacter(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
+            try {
+                var character = characters.First(c => c.Id == id);
+
+                if(character is null) {
+                    throw new Exception($"Character with Id '{id}' not found");
+                }
+
+                characters.Remove(character);
+
+                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
             } catch (Exception e) {
                 serviceResponse.Success = false;
                 serviceResponse.Message = e.Message;

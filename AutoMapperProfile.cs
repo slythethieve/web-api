@@ -12,6 +12,7 @@ namespace web_api
         {
             CreateMap<Character, GetCharacterDTO>();
             CreateMap<AddCharacterDTO, Character>();
+            CreateMap<UpdateCharacterDTO, Character>();
         }
         
     }
