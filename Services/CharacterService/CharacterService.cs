@@ -9,11 +9,6 @@ namespace web_api.Services.CharacterService
     public class CharacterService : ICharacterService
     {
 
-        private static List<Character> characters = new List<Character>() {
-            new Character(),
-            new Character{ Id = 1, Name = "Douchebag"}
-        };
-
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         public CharacterService(IMapper mapper, DataContext context)
@@ -78,15 +73,19 @@ namespace web_api.Services.CharacterService
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
             try {
-                var character = characters.First(c => c.Id == id);
+                var character = 
+                    await _context.Characters.FirstAsync(c => c.Id == id);
 
                 if(character is null) {
                     throw new Exception($"Character with Id '{id}' not found");
                 }
 
-                characters.Remove(character);
+                _context.Characters.Remove(character);
+                await _context.SaveChangesAsync();
 
-                serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+
+                serviceResponse.Data = 
+                    await _context.Characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToListAsync();
             } catch (Exception e) {
                 serviceResponse.Success = false;
                 serviceResponse.Message = e.Message;
