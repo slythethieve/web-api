@@ -16,5 +16,7 @@ namespace web_api.Models
         public int Intelligence { get; set; } = 10;
 
         public CharacterClass Class { get; set; } = CharacterClass.Fighter;
+
+        public User? User { get; set; }
     }
 }
