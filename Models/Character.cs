@@ -18,5 +18,7 @@ namespace web_api.Models
         public CharacterClass Class { get; set; } = CharacterClass.Fighter;
 
         public User? User { get; set; }
+
+        public Weapon? Weapon {get; set;}
     }
 }

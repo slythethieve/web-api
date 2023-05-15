@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using web_api.DTOs.Weapon;
 
 namespace web_api
 {
@@ -13,6 +14,7 @@ namespace web_api
             CreateMap<Character, GetCharacterDTO>();
             CreateMap<AddCharacterDTO, Character>();
             CreateMap<UpdateCharacterDTO, Character>();
+            CreateMap<Weapon, GetWeaponDTO>();
         }
         
     }
